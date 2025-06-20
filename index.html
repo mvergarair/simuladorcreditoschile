@@ -50,14 +50,14 @@
                     <!-- House Price Input -->
                     <div class="input-group">
                         <label for="housePrice">Precio de la Vivienda (UF):</label>
-                        <input type="number" id="housePrice" placeholder="Ingrese el precio de la vivienda"
+                        <input type="number" id="housePrice" placeholder="Ingrese el precio de la vivienda" step="100"
                             oninput="calculateMortgage()">
                     </div>
 
                     <!-- Down Payment Input -->
                     <div class="input-group">
                         <label for="downPaymentSlider">Pie (<span id="downPaymentValue">20%</span>)</label>
-                        <input type="number" id="downPayment" class="hidden" oninput="updateDownPaymentSlider()">
+                        <input type="number" id="downPayment" class="hidden" oninput="updateDownPaymentSlider()" step="100">
                         <div class="slider-container">
                             <input type="range" id="downPaymentSlider" class="slider" min="0" max="100" value="20"
                                 step="1" oninput="updateDownPayment()">
