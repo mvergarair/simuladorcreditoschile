@@ -345,7 +345,7 @@
                     <!-- Term Length Input -->
                     <div class="input-group">
                         <label for="termLength">Plazo del Crédito (años):</label>
-                        <input type="number" id="termLength" placeholder="Ej: 25" min="1" max="40"
+                        <input type="number" id="termLength" placeholder="Ej: 30" min="1" max="40"
                             oninput="calculateMortgage()">
                     </div>
 
@@ -553,7 +553,7 @@
         window.onload = function () {
             document.getElementById('housePrice').value = '5000';
             document.getElementById('interestRate').value = '4.5';
-            document.getElementById('termLength').value = '25';
+            document.getElementById('termLength').value = '30';
 
             fetchAndSetUF(); // Fetch UF from API and update input
             updateDownPayment(); // This will also trigger calculateMortgage()
