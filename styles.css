@@ -126,6 +126,18 @@ body {
 
 .slider-container {
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.slider-wrapper {
+  width: 80%;
+}
+.down-payment-value {
+  width: 20%;
+  text-align: right;
+  font-size: 0.8rem;
+  margin-top: 6px
 }
 
 .slider-labels {

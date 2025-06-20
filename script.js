@@ -42,6 +42,12 @@ function updateDownPayment() {
     downPaymentInput.value = (downPaymentPercent / 100) * housePrice;
   }
 
+  // Calculate and display down payment in CLP
+  const ufValue = getUfValue();
+  const downPaymentUF = parseFloat(downPaymentInput.value) || 0;
+  const downPaymentCLP = downPaymentUF * ufValue;
+  document.getElementById('downPaymentCLPValue').textContent = downPaymentUF > 0 ? `${formatCurrency(downPaymentCLP, 'CLP')} CLP` : '';
+
   calculateMortgage();
 }
 
@@ -55,13 +61,19 @@ function updateDownPaymentSlider() {
     document.getElementById('downPaymentSlider').value = percentage;
     document.getElementById('downPaymentValue').textContent = percentage.toFixed(0) + '%';
   }
+
+  // Calculate and display down payment in CLP
+  const ufValue = getUfValue();
+  const downPaymentUF = downPaymentValue;
+  const downPaymentCLP = downPaymentUF * ufValue;
+  document.getElementById('downPaymentCLPValue').textContent = downPaymentUF > 0 ? `${formatCurrency(downPaymentCLP, 'CLP')} CLP` : '';
+
   calculateMortgage();
 }
 
 // Main calculation function
 function calculateMortgage() {
   const housePrice = parseFloat(document.getElementById('housePrice').value);
-  const downPaymentPercent = parseFloat(document.getElementById('downPaymentSlider').value);
   const downPaymentUF = parseFloat(document.getElementById('downPayment').value);
   const annualInterestRate = parseFloat(document.getElementById('interestRate').value);
   const termYears = parseInt(document.getElementById('termLength').value);
@@ -281,7 +293,6 @@ function saveInputsToStorage() {
   localStorage.setItem(STORAGE_KEYS.interestRate, document.getElementById('interestRate').value);
   localStorage.setItem(STORAGE_KEYS.termLength, document.getElementById('termLength').value);
   localStorage.setItem(STORAGE_KEYS.downPayment, document.getElementById('downPayment').value);
-  localStorage.setItem(STORAGE_KEYS.downPaymentSlider, document.getElementById('downPaymentSlider').value);
 }
 
 // Load input values from localStorage (returns true if loaded)
@@ -301,10 +312,6 @@ function loadInputsFromStorage() {
   }
   if (localStorage.getItem(STORAGE_KEYS.downPayment)) {
     document.getElementById('downPayment').value = localStorage.getItem(STORAGE_KEYS.downPayment);
-    loaded = true;
-  }
-  if (localStorage.getItem(STORAGE_KEYS.downPaymentSlider)) {
-    document.getElementById('downPaymentSlider').value = localStorage.getItem(STORAGE_KEYS.downPaymentSlider);
     loaded = true;
   }
   if (localStorage.getItem(STORAGE_KEYS.ufValue)) {
@@ -345,7 +352,7 @@ window.onload = function () {
   }
 
   fetchAndSetUF(); // Fetch UF from API and update input
-  updateDownPayment(); // This will also trigger calculateMortgage()
+  updateDownPaymentSlider();
   initDarkMode();
   attachInputStorageListeners();
 
