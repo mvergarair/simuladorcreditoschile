@@ -62,12 +62,13 @@ function updateDownPaymentSlider() {
 function calculateMortgage() {
   const housePrice = parseFloat(document.getElementById('housePrice').value);
   const downPaymentPercent = parseFloat(document.getElementById('downPaymentSlider').value);
+  const downPaymentUF = parseFloat(document.getElementById('downPayment').value);
   const annualInterestRate = parseFloat(document.getElementById('interestRate').value);
   const termYears = parseInt(document.getElementById('termLength').value);
   const ufValue = getUfValue();
 
   // Calculate loan amount in UF
-  const downPaymentUF = (downPaymentPercent / 100) * housePrice;
+  // const downPaymentUF = (downPaymentPercent / 100) * housePrice;
   const loanAmountUF = housePrice - downPaymentUF;
 
   // Calculate monthly interest rate and total payments
@@ -265,15 +266,88 @@ async function fetchAndSetUF() {
   }
 }
 
+// Keys for localStorage
+const STORAGE_KEYS = {
+  housePrice: 'mortgage_housePrice',
+  interestRate: 'mortgage_interestRate',
+  termLength: 'mortgage_termLength',
+  downPayment: 'mortgage_downPayment',
+  downPaymentSlider: 'mortgage_downPaymentSlider',
+};
+
+// Save input values to localStorage
+function saveInputsToStorage() {
+  localStorage.setItem(STORAGE_KEYS.housePrice, document.getElementById('housePrice').value);
+  localStorage.setItem(STORAGE_KEYS.interestRate, document.getElementById('interestRate').value);
+  localStorage.setItem(STORAGE_KEYS.termLength, document.getElementById('termLength').value);
+  localStorage.setItem(STORAGE_KEYS.downPayment, document.getElementById('downPayment').value);
+  localStorage.setItem(STORAGE_KEYS.downPaymentSlider, document.getElementById('downPaymentSlider').value);
+}
+
+// Load input values from localStorage (returns true if loaded)
+function loadInputsFromStorage() {
+  let loaded = false;
+  if (localStorage.getItem(STORAGE_KEYS.housePrice)) {
+    document.getElementById('housePrice').value = localStorage.getItem(STORAGE_KEYS.housePrice);
+    loaded = true;
+  }
+  if (localStorage.getItem(STORAGE_KEYS.interestRate)) {
+    document.getElementById('interestRate').value = localStorage.getItem(STORAGE_KEYS.interestRate);
+    loaded = true;
+  }
+  if (localStorage.getItem(STORAGE_KEYS.termLength)) {
+    document.getElementById('termLength').value = localStorage.getItem(STORAGE_KEYS.termLength);
+    loaded = true;
+  }
+  if (localStorage.getItem(STORAGE_KEYS.downPayment)) {
+    document.getElementById('downPayment').value = localStorage.getItem(STORAGE_KEYS.downPayment);
+    loaded = true;
+  }
+  if (localStorage.getItem(STORAGE_KEYS.downPaymentSlider)) {
+    document.getElementById('downPaymentSlider').value = localStorage.getItem(STORAGE_KEYS.downPaymentSlider);
+    loaded = true;
+  }
+  if (localStorage.getItem(STORAGE_KEYS.ufValue)) {
+    document.getElementById('ufValue').value = localStorage.getItem(STORAGE_KEYS.ufValue);
+    loaded = true;
+  }
+  return loaded;
+}
+
+// Attach listeners to save on change
+function attachInputStorageListeners() {
+  [
+    'housePrice',
+    'interestRate',
+    'termLength',
+    'downPayment',
+    'downPaymentSlider',
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', saveInputsToStorage);
+    }
+  });
+
+  document.getElementById('housePrice').addEventListener('input', function () {
+      document.getElementById('downPayment').max = this.value || '';
+  });
+}
+
 // Set default values and perform initial calculation on page load
 window.onload = function () {
-  document.getElementById('housePrice').value = '5000';
-  document.getElementById('interestRate').value = '4.5';
-  document.getElementById('termLength').value = '30';
+  // Load from storage or set defaults
+  const loaded = loadInputsFromStorage();
+  if (!loaded) {
+    document.getElementById('housePrice').value = '5000';
+    document.getElementById('interestRate').value = '4.5';
+    document.getElementById('termLength').value = '30';
+  }
 
   fetchAndSetUF(); // Fetch UF from API and update input
   updateDownPayment(); // This will also trigger calculateMortgage()
   initDarkMode();
+  attachInputStorageListeners();
 
   // Tab logic for amortization section
   const tabTable = document.getElementById('tabTable');
