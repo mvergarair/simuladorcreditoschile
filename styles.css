@@ -233,6 +233,9 @@ body {
   overflow-y: auto;
   border: 1px solid var(--green-100);
   border-radius: 0.5rem;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 #amortizationTable {
@@ -278,6 +281,47 @@ body {
   white-space: nowrap;
 }
 
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--gray-700);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.tab-btn.active {
+  background: var(--green-100);
+  color: var(--green-500);
+}
+
+.amortization-panels {
+  height: 400px; /* or any value you prefer */
+  position: relative;
+  min-height: 300px;
+  max-height: 500px;
+}
+
+.amortization-panels > #tabPanelTable,
+.amortization-panels > #tabPanelChart {
+  height: 100%;
+}
+
+.chart-container {
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.chart-container canvas {
+  height: 100% !important;
+  width: 100% !important;
+  display: block;
+}
+
 .main-footer {
   background: #f5f5f5;
   text-align: center;
@@ -298,6 +342,12 @@ body {
 .footer-link:focus {
   text-decoration: underline;
   color: #019863;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 3px;
 }
 
 /* Responsive Design */
@@ -404,5 +454,8 @@ body {
   }
   th {
     font-size: 0.5rem;
+  }
+  .tab-buttons {
+    margin-top: -5px;
   }
 }
