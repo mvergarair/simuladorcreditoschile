@@ -347,6 +347,7 @@ window.onload = function () {
   const loaded = loadInputsFromStorage();
   if (!loaded) {
     document.getElementById('housePrice').value = '5000';
+    document.getElementById('downPayment').value = '1000';
     document.getElementById('interestRate').value = '4.5';
     document.getElementById('termLength').value = '30';
   }
