@@ -186,12 +186,14 @@ body {
   box-shadow: 0 0 0 2px var(--green-100);
 }
 
-/* Summary Section */
+/* Summary Section - Fixed for cutoff issues */
 .summary-container {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   color: var(--gray-700);
+  width: 100%;
+  overflow: hidden; /* Prevent horizontal overflow */
 }
 
 .summary-row {
@@ -200,6 +202,8 @@ body {
   align-items: center;
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--green-100);
+  flex-wrap: wrap; /* Allow wrapping on very small screens */
+  gap: 0.5rem; /* Add gap between label and value when wrapped */
 }
 
 .summary-row:last-child {
@@ -213,6 +217,10 @@ body {
 .summary-row .value {
   font-weight: 100;
   font-size: 1.125rem;
+  min-width: 0; /* Allow shrinking */
+  flex-shrink: 0; /* Prevent shrinking of values */
+  text-align: right;
+  word-break: break-word; /* Break long values if needed */
 }
 
 /* Table section */
@@ -282,6 +290,13 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .summary-row .value {
+    font-size: 1rem;
+    max-width: 50%;
+  }
+}
+
 @media (min-width: 1024px) {
   .grid-container {
     grid-template-columns: 25% 75%;
@@ -290,5 +305,82 @@ body {
 
   .column-right {
     margin-top: 0;
+  }
+}
+
+/* Responsive table container for mobile */
+@media (max-width: 600px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  .main-container,
+  .grid-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    gap: 1rem;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .column {
+    padding: 1rem 0 1rem 0;
+  }
+  .column-right {
+    margin-top: 0;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+  }
+
+  #amortizationTable {
+    /* min-width: 500px; */
+    width: 100%;
+    table-layout: auto;
+    font-size: 0.75rem;
+  }
+
+  #amortizationTable th,
+  #amortizationTable td {
+    padding: 0.5rem 0.5rem;
+    white-space: nowrap;
+  }
+
+  body, html {
+    overflow-x: hidden;
+  }
+
+  /* Mobile fixes for summary section */
+  .summary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .summary-row .value {
+    text-align: left;
+    font-size: 1rem;
+  }
+  
+  .summary-row .label {
+    font-size: 0.875rem;
+  }
+  th {
+    font-size: 0.5rem;
   }
 }
