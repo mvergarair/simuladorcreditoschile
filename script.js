@@ -1,3 +1,32 @@
+function initDarkMode() {
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const toggleIcon = darkModeToggle.querySelector('.toggle-icon');
+  
+  // Check for saved theme preference or default to light mode
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    toggleIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+  } else if (prefersDark) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    toggleIcon.textContent = '☀️';
+    localStorage.setItem('theme', 'dark');
+  }
+  
+  // Toggle dark mode
+  darkModeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    toggleIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+  });
+}
+
+
 // Function to update the down payment numeric input and text when slider changes
 function updateDownPayment() {
   const slider = document.getElementById('downPaymentSlider');
@@ -142,4 +171,5 @@ window.onload = function () {
 
   fetchAndSetUF(); // Fetch UF from API and update input
   updateDownPayment(); // This will also trigger calculateMortgage()
+  initDarkMode();
 };

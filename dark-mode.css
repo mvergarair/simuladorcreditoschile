@@ -1,0 +1,112 @@
+/* Dark Mode Toggle Styles */
+.dark-mode-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+.toggle-btn {
+  background: var(--white);
+  border: 2px solid var(--green-100);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toggle-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--green-100);
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+  --gray-50: #1f2937;
+  --gray-100: #374151;
+  --gray-200: #4b5563;
+  --gray-300: #6b7280;
+  --gray-500: #9ca3af;
+  --gray-700: #d1d5db;
+  --gray-800: #f3f4f6;
+  --gray-900: #ffffff;
+  --white: #111827;
+  --green-100: #065f46;
+  --green-500: #10b981;
+}
+
+/* Dark Mode Specific Styles */
+[data-theme="dark"] body {
+  background-color: #111827;
+  color: #f3f4f6;
+}
+
+[data-theme="dark"] .toggle-btn {
+  background: #374151;
+  border-color: #065f46;
+  color: #f3f4f6;
+}
+
+[data-theme="dark"] .input-group input[type="number"] {
+  background-color: #1f2937;
+  border-color: #065f46;
+  color: #f3f4f6;
+}
+
+[data-theme="dark"] .input-group input[type="number"]::placeholder {
+  color: #10b981;
+}
+
+[data-theme="dark"] .slider {
+  background: #065f46;
+}
+
+[data-theme="dark"] .slider::-webkit-slider-thumb {
+  background: #10b981;
+}
+
+[data-theme="dark"] .slider::-moz-range-thumb {
+  background: #10b981;
+}
+
+[data-theme="dark"] .slider::-ms-thumb {
+  background: #10b981;
+}
+
+[data-theme="dark"] #amortizationTable thead {
+  background-color: #1f2937;
+}
+
+[data-theme="dark"] #amortizationTable tbody tr {
+  background-color: #111827;
+  border-bottom-color: #065f46;
+}
+
+[data-theme="dark"] .main-footer {
+  background: #1f2937;
+  color: #f3f4f6;
+}
+
+[data-theme="dark"] .footer-link:hover,
+[data-theme="dark"] .footer-link:focus {
+  color: #10b981;
+}
+
+[data-theme="dark"] .table-container {
+  border-color: #065f46;
+}
+
+[data-theme="dark"] .summary-row {
+  border-bottom-color: #065f46;
+}
