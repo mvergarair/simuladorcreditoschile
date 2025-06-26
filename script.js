@@ -379,6 +379,14 @@ window.onload = function () {
     tabChart.classList.remove('active');
     tabPanelTable.style.display = '';
     tabPanelChart.style.display = 'none';
+
+    // Google Analytics event for Table
+    if (typeof gtag === 'function') {
+      gtag('event', 'tab_click', {
+        event_category: 'Tabs',
+        event_label: 'Table'
+      });
+    }
   });
 
   tabChart.addEventListener('click', function () {
@@ -386,5 +394,13 @@ window.onload = function () {
     tabTable.classList.remove('active');
     tabPanelTable.style.display = 'none';
     tabPanelChart.style.display = '';
+
+    // Google Analytics event for Graph
+    if (typeof gtag === 'function') {
+      gtag('event', 'tab_click', {
+        event_category: 'Tabs',
+        event_label: 'Graph'
+      });
+    }
   });
 };
