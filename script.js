@@ -332,12 +332,23 @@ function attachInputStorageListeners() {
   ].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
-      el.addEventListener('input', saveInputsToStorage);
+      el.addEventListener('input', function (e) {
+        saveInputsToStorage();
+
+        // Google Analytics event
+        if (typeof gtag === 'function') {
+          gtag('event', 'input_change', {
+            event_category: 'Input',
+            event_label: id,
+            value: e.target.value
+          });
+        }
+      });
     }
   });
 
   document.getElementById('housePrice').addEventListener('input', function () {
-      document.getElementById('downPayment').max = this.value || '';
+    document.getElementById('downPayment').max = this.value || '';
   });
 }
 
